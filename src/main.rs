@@ -40,7 +40,7 @@ fn handle_input(mut input_string: &mut String, array: &mut [(u32, f32); ARRAY_SI
             }
         };
 
-        print!("Please input the price of Item {} (with cents): ", i + 1);
+        print!("Please input the price of Item {}: ", i + 1);
         io::stdout().flush().unwrap();
         input_string.clear();
         io::stdin()
@@ -81,8 +81,8 @@ fn process_checkout(subtotal: f64, tax_total: f64) -> f64 {
 fn display_array(array: [(u32, f32); ARRAY_SIZE]) {
     for i in 0..ARRAY_SIZE {
         println!(
-            "Item {} costs {}, you're taking {} ===> Total of: {}",
-            i,
+            "Item {} costs $ {:.2}, you're taking {} units ===> Total of: $ {:.2}",
+            i + 1,
             array[i].1,
             array[i].0,
             array[i].0 as f32 * array[i].1
@@ -91,13 +91,13 @@ fn display_array(array: [(u32, f32); ARRAY_SIZE]) {
 }
 
 fn display_checkout(subtotal: f64, tax_total: f64, checkout_total: f64) {
-    println!("The subtotal is: {}", subtotal);
+    println!("The subtotal is: $ {:.2}", subtotal);
     println!(
-        "Tax is: {}. Applied to your purchase it's: {}",
+        "Tax is: $ {:.2}. Applied to your purchase it's: $ {:.2}",
         TAX_VALUE, tax_total
     );
     println!(
-        "With these values, the total to pay is: {}.",
+        "With these values, the total to pay is: $ {:.2}",
         checkout_total
     );
 }
