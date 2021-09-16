@@ -22,8 +22,11 @@ fn main() {
 }
 
 fn handle_input(mut input_string: &mut String, array: &mut [(u32, f32); ARRAY_SIZE]) {
-    for i in 0..ARRAY_SIZE {
-        print!("Please input how many of Item {} you're getting: ", i + 1);
+    for (index, array_val) in array.iter_mut().enumerate() {
+        print!(
+            "Please input how many of Item {} you're getting: ",
+            index + 1
+        );
         io::stdout().flush().unwrap();
         input_string.clear();
         io::stdin()
@@ -40,7 +43,7 @@ fn handle_input(mut input_string: &mut String, array: &mut [(u32, f32); ARRAY_SI
             }
         };
 
-        print!("Please input the price of Item {}: ", i + 1);
+        print!("Please input the price of Item {}: ", index + 1);
         io::stdout().flush().unwrap();
         input_string.clear();
         io::stdin()
@@ -57,15 +60,18 @@ fn handle_input(mut input_string: &mut String, array: &mut [(u32, f32); ARRAY_SI
             }
         };
 
-        array[i] = (item_amount, item_price);
+        array_val.0 = item_amount;
+        array_val.1 = item_price;
     }
 }
 
 fn process_subtotal(array: [(u32, f32); ARRAY_SIZE]) -> f64 {
     let mut subtotal: f64 = 0.0;
-    for i in 0..ARRAY_SIZE {
-        subtotal += (array[i].0 as f32 * array[i].1) as f64;
-    }
+
+    subtotal += array
+        .iter()
+        .map(|(a, b)| f64::from(*a as f32 * b))
+        .sum::<f64>();
 
     return subtotal;
 }
@@ -79,13 +85,13 @@ fn process_checkout(subtotal: f64, tax_total: f64) -> f64 {
 }
 
 fn display_array(array: [(u32, f32); ARRAY_SIZE]) {
-    for i in 0..ARRAY_SIZE {
+    for (index, elem) in array.iter().enumerate() {
         println!(
             "Item {} costs $ {:.2}, you're taking {} units ===> Total of: $ {:.2}",
-            i + 1,
-            array[i].1,
-            array[i].0,
-            array[i].0 as f32 * array[i].1
+            index + 1,
+            elem.1,
+            elem.0,
+            elem.0 as f32 * elem.1
         );
     }
 }
