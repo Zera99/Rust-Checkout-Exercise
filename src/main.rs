@@ -109,13 +109,13 @@ fn display_array(vector: &Vec<(u32, f32)>) {
 }
 
 fn display_checkout(subtotal: f64, tax_total: f64, checkout_total: f64) {
-    println!("The subtotal is: $ {:.2}", subtotal);
+    println!("\nThe subtotal is: $ {:.2}", subtotal);
     println!(
         "Tax is: $ {:.2}. Applied to your purchase it's: $ {:.2}",
         TAX_VALUE, tax_total
     );
     println!(
-        "With these values, the total to pay is: $ {:.2}",
+        "\n-- With these values, the total to pay is: $ {:.2} --\n\n",
         checkout_total
     );
 }
